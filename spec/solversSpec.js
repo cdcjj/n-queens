@@ -1,5 +1,5 @@
 describe('solvers', function() {
-  window.displayBoard = function() {};
+  //window.displayBoard = function() {};
 
   describe('findNRooksSolution()', function() {
 
