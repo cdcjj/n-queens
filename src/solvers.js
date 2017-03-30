@@ -11,14 +11,6 @@
 // take a look at solversSpec.js to see what the tests are expecting
 
 
-// hasRowConflictAt: function(rowIndex)
-// hasAnyRowConflicts: function()
-// hasColConflictAt: function(colIndex)
-// hasAnyColConflicts: function()
-// rows: function() 
-// togglePiece: function(rowIndex, colIndex) 
-// hasAnyRooksConflicts: function()
-//  _isInBounds: function(rowIndex, colIndex)
 
 // return a matrix (an array of arrays) representing a single nxn chessboard, with n rooks placed such that none of them can attack each other
 window.findNRooksSolution = function(n) {
@@ -61,9 +53,41 @@ window.countNRooksSolutions = function(n) {
   return solutionCount;
 };
 
+// hasAnyQueenConflictsOn: function(rowIndex, colIndex) 
+// hasAnyQueensConflicts: function()
+
+
 // return a matrix (an array of arrays) representing a single nxn chessboard, with n queens placed such that none of them can attack each other
 window.findNQueensSolution = function(n) {
-  var solution = undefined; //fixme
+  var board = new Board({n: n});
+  var solution = []; //fixed
+  var size = n;
+  var count = 0;
+  if (size === 0) {
+    return solution;
+  }
+  // var inRow = 0;
+  // var inCol = (n - 2) <= 0 ? 0 : n - 2;
+  // board.togglePiece(inRow, inCol);
+  // for (var i = 0; i < size; i++) {
+  //   for (var j = 0; j < size; j++) {
+  //     if (i === inRow && j === inCol) {
+  //       continue;
+  //     }
+  //     board.togglePiece(i, j);
+  //     if (board.hasAnyQueensConflicts() === true) {
+  //       board.togglePiece(i, j);
+  //     }
+  //   }
+  // }
+
+  var rowStart = 0;
+  var colStart = 0;
+
+
+  for (var k = 0; k < n; k++) {
+    solution.push(board.get(k));
+  }
 
   console.log('Single solution for ' + n + ' queens:', JSON.stringify(solution));
   return solution;
