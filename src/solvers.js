@@ -66,24 +66,69 @@ window.findNQueensSolution = function(n) {
   if (size === 0) {
     return solution;
   }
-  // var inRow = 0;
-  // var inCol = (n - 2) <= 0 ? 0 : n - 2;
-  // board.togglePiece(inRow, inCol);
-  // for (var i = 0; i < size; i++) {
-  //   for (var j = 0; j < size; j++) {
-  //     if (i === inRow && j === inCol) {
-  //       continue;
-  //     }
-  //     board.togglePiece(i, j);
-  //     if (board.hasAnyQueensConflicts() === true) {
-  //       board.togglePiece(i, j);
-  //     }
-  //   }
-  // }
-
-  var rowStart = 0;
   var colStart = 0;
+  var rowStart = 0;
 
+
+
+  var recurse = function(rowStart, colStart, loopNum) {
+    // toggle starting piece on row 0
+    debugger;
+    board.togglePiece(rowStart, colStart);
+    count++;
+    // start on nextRow (rowStart + 1)
+    var currentRow = rowStart + 1;
+    if (currentRow === size) {
+      return;
+    }
+    //for (var i = rowStart + 1; i < size; i++) {
+    var storeJ = [];
+    // iterate through col, start on col 0
+    for (var j = 0; j < size; j++) {
+      // togglePiece
+      board.togglePiece(currentRow, j);
+        // no conflict
+      if (board.hasAnyQueensConflicts() === false) {
+        // increase count
+        storeJ.push(j);
+        board.togglePiece(currentRow, j);
+      } else {
+        // toggleOFF
+        board.togglePiece(currentRow, j);
+      }
+    }
+    if (storeJ.length > 0) {
+      loopNum++;
+      for (var k = 0; k < storeJ.length; k++) {
+        if (count === n) {
+          return;
+        }
+        recurse(currentRow, storeJ[k], loopNum);
+      }
+      loopNum--;
+    }
+     
+    // base case:
+    if (count === n) {
+      loopNum--;
+      return;
+    } else if (loopNum !== 0) {
+      board.togglePiece(rowStart, colStart);
+      count--;
+      loopNum--;
+      return;
+    } else if (count !== n) {
+      colStart++;
+      count = 0;
+      board = new Board({n: n});
+      if (colStart === size) {
+        return;
+      }
+      return recurse(0, colStart, 0);
+    }
+  };
+
+  recurse(rowStart, colStart, 0);
 
   for (var k = 0; k < n; k++) {
     solution.push(board.get(k));
